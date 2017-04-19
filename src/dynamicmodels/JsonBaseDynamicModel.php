@@ -18,7 +18,7 @@ use jberall\arjsoncolumn\helpers\DynamicModelHelper;
     A database table address with attribute data_json as json or jsonb.<br>
   The Address Model, which normally extends \yii\db\ActiveRecord  will extend JsonBaseActiveRecordModel.<br>
   The class AddressDynamicModel, which normally extends yii\base\DynamicModel will extend JsonBaseDynamicModel.<br>
-  These classes have the required methods to handle the $data_json attribute.  The data_json attribute is handled as the $arrData array.<br>
+  These classes have the required methods to handle the $data_json attribute.  The data_json attribute is handled as the $arrDMData array.<br>
  * 
  *
  * @author Jonathan Berall <jberall@gmail.com>
@@ -65,7 +65,7 @@ class JsonBaseDynamicModel  extends DynamicModel {
      * @param array $attributes
      * @param array $config
      */
-    public function __construct(array $attributes = array(), $config = array()) {  
+    public function __construct(array $attributes = array(), $config = array()) { 
         $attributes = ArrayHelper::merge($this->startingAttributes,$attributes); 
         $attributes = $this->initializeArrayObjects($attributes);
         parent::__construct($attributes, $config);
@@ -134,10 +134,29 @@ class JsonBaseDynamicModel  extends DynamicModel {
      * @param boolean $clearErrors
      * @return boolean $valid
      */
-    public function validate($attributeNames = null, $clearErrors = true) {
+    public function validateWithArray($attributeNames = null, $clearErrors = true) {
         
-        $valid = parent::validate($attributeNames, $clearErrors);
+        $valid = parent::validate($attributeNames, $clearErrors);     
         $valid = DynamicModelHelper::validateArrayObjects($this,'arrObjects',$attributeNames,$clearErrors) && $valid;
         return $valid;
     }    
+    
+//    public function loadWithArray($data, $formName = null) {
+//        $valid = parent::load($data, $formName);
+//
+//        
+//        //loop thru array and load objects.
+//        foreach($this->arrObjects as $key => $obj) {
+////            print_R($data);
+////            die(__METHOD__);
+//            //if no data for the arrObject do nothing
+//            if($newData = $data[DynamicModelHelper::getModelPathName($obj['modelPath'])] ?? null) {
+////                echo $obj['loadMethod'];
+////                die(__METHOD__ . __LINE__);
+//                $dmh = new DynamicModelHelper();
+//                $valid = $dmh->{$obj['loadMethod']}($this,$key,$data,$formName) && $valid;
+//            }
+//        }        
+//        return $valid;
+//    }
 }

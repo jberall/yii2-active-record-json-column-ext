@@ -23,7 +23,6 @@ class PhoneNumberDynamicModel extends \yii\base\DynamicModel{
     
     public function rules() {
         $parentrules = parent::rules();
-        
         $rules = [
             [['default'],'boolean','on' => [Model::SCENARIO_DEFAULT]],
             [['type',],'string','max' => 20,'on' => [Model::SCENARIO_DEFAULT]],

@@ -25,7 +25,6 @@ to the require section of your `composer.json` file.
 Usage
 -----
 
-Once the extension is installed, simply use it in your code by  :
-
-```php
-<?= \jberall\arjsoncolumn\AutoloadExample::widget(); ?>```
+The extension has basic attributes, array_objects override and array_objects set.
+If you want to have dimensions just do the 4 attributes as a property like, width, height, length and UOM.
+array objects - like Emails and Phone Numbers will automatically overwrite the loading.
